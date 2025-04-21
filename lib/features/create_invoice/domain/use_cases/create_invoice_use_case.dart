@@ -63,7 +63,7 @@ class CreateInvoiceUseCase {
       graphics: graphics,
       vendor: invoice.vendor,
     );
-    // Draw QR Code
+    // Generate a QR Code
     final String qrCodeBase64 = await _repository.createQRCode(
       qrCode: QRCodeV1(
         sellerName:
@@ -76,7 +76,7 @@ class CreateInvoiceUseCase {
       version: QRCodeVersion.v1,
     );
     // Draw QR Code on the page
-    await drawQRCode(qrCodeBase64, graphics, width, 100);
+    await _drawQRCode(qrCodeBase64, graphics, width, 100);
     final bytes = await document.save();
     // dispose the document to free up resources
     document.dispose();
@@ -199,7 +199,7 @@ class CreateInvoiceUseCase {
     );
   }
 
-  Future<void> drawQRCode(
+  Future<void> _drawQRCode(
     String base64,
     PdfGraphics graphics,
     double width,
